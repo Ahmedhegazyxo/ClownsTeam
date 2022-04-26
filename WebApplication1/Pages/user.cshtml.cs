@@ -17,7 +17,7 @@ namespace WebApplication1.Pages
         {
             var uid = "";
 
-            string constr = "Server=(localdb)\\mssqllocaldb;Database=Thriftly;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string query = "select FirstName,LastName from Account where Uid = @uid";

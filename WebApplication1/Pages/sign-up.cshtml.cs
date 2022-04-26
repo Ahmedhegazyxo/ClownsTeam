@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Web;
+
 namespace WebApplication1.Pages
 {
     public class RegisterModel : PageModel
@@ -16,7 +17,7 @@ namespace WebApplication1.Pages
         public string birthDate;
 
         public void insertQuery() {
-            string constr = "Server=(localdb)\\mssqllocaldb;Database=Thriftly;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string query = "INSERT INTO Account(Email , Password , Birthdate  , UserAdress , FirstName , LastName , PhoneNo) VALUES (@email , @Password , @Birthdate  , @UserAdress , @FirstName , @LastName , @PhoneNo )";

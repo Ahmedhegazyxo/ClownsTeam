@@ -142,24 +142,32 @@
             </div>
           </div>
         </header>
-        <a href="product" class="category-navlink">
-          <div class="category-container2">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              class="category-image2"
-            />
-            <h3 class="category-text">Product Title</h3>
-            <h4 class="category-text1">
-              <span>located in:</span>
-              <br />
-              <span>[</span>
-              <span class="category-text5"></span>
-              <span>CITY]</span>
-            </h4>
-            <h4 class="category-text7">Product Price</h4>
-          </div>
-        </a>
+          @{
+                    foreach (var item in Model.listProducts)
+                {
+                    
+                    <a href="product" class="category-navlink">
+                      <div class="category-container2">
+                        <img
+                          alt="image"
+                          src="https://play.teleporthq.io/static/svg/default-img.svg"
+                          class="category-image2"
+                        />
+                        <h3 class="category-text">@item.PName</h3>
+                        <h4 class="category-text1">
+                          <span>located in:</span>
+                          <br />
+                          <span>@item.GId</span>
+                          <!--span class="category-text5"></span>
+                          <span>CITY]</span-->
+                        </h4>
+                        <h4 class="category-text7">@item.Price</h4>
+                      </div>
+                    </a>
+                    <br>
+                }
+            }
+        
         <footer class="category-footer">
           <img
             alt="logo"

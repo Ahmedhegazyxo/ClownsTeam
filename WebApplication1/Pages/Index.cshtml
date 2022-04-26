@@ -41,16 +41,7 @@
   </head>
   <body>
                
-                <script>
-                     function onChangeGovernorate(){
-                          let cities = @Model.getCities("3");
-                        
-                        var citySelector = document.getelementbyid("citySelector");
-                for(var i=citySelector.options.length- 1;i>= 0;i--) {citySelector.remove(i);}        
-                for(i in cities) {citySelector.add(new option(cities[i].cityname_en,i));}
-                     }
-
-                </script>
+               
     <div>
             <link rel="stylesheet" href="css/home.css" asp-append-version="true" />
 
@@ -158,52 +149,65 @@
 
                 <form  class="home-text" name="Customer_search" action="" method="post">
 
-        <div>
-        <h3>Governorate</h3>
-          <br>
+                     <div>
+                        <h3>Governorate</h3>
+                         <br>
 
-        <select class="button" name="Governorate" value="governorate" onchange="onChangeGovernorate()">
-                        @{
-                            foreach (var item in Model.listGovernates)
-                            {
-                                <option value="@item.gId" >@item.gNameEn </option>
-    }
-}
-        </select>
+                            <select class="button" name="Governorate" value="governorate">
+                                     @{
+                                             foreach (var item in Model.listGovernates)
+                                         {
+                                              <option value="@item.gId" >@item.gNameEn </option>
+                                         }
+                                     }
+                            </select>
+                          <br>
+                         <h3>Category</h3>
+                          <br>
+                        <select class="button" name="Category" value="category">
+                                    @{
+                                             foreach (var item in Model.listCategories)
+                                         {
+                                              <option value="@item.CatId" >@item.CName </option>
+                                         }
+                                     }
+                        </select>
 
 
 
-          <br>
-          <br>
-          <br>
-        <h3>City</h3>
-            <br>
-        <select id="citySelector" class="button" name="City" value="city">
-          
-        </select>
+                          <br>
+                          <br>
+                         <h3>City</h3>
+                          <br>
+                        <select class="button" name="City" value="City">
+                                    @{
+                                             foreach (var item in Model.listCities)
+                                         {
+                                              <option value="@item.CityId" >@item.CityName_en  </option>
+                                         }
+                                     }
+                        </select>
 
-          <br>
-          <br>
-          <br>
+                          <br>
+                            
+                            
+                          <br>
+                          <br>
+                          <br>
 
-        <h3>Category</h3>
-          <br>
-        <select class="button" name="Category" value="category">
-            <option value="03">Fetch the category list from the database</option>
-        </select>
+        
+                        </div>
 
-        </div>
+                          <br>
+                          <br>
+                          <br>
+                          <br>
+                          <br>
 
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+                          <input class="button" type="submit" value = "Search"/>
+                          <input class="button" type="reset"/>
 
-          <input class="button" type="submit" value = "Search"/>
-          <input class="button" type="reset"/>
-
-          </form>
+                          </form>
 
 
 

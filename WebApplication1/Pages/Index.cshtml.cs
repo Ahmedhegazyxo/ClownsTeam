@@ -10,8 +10,9 @@ namespace WebApplication1.Pages
     {
 
         public List<Governorate> listGovernates = new List<Governorate>();
+        public List<Category> listCategories = new List<Category>();
         public List<City> listCities = new List<City>();
-        
+        public List<Products> listProducts = new List<Products>();
 
         private readonly ILogger<IndexModel> _logger;
 
@@ -20,52 +21,41 @@ namespace WebApplication1.Pages
             _logger = logger;
         }
 
-        public List<string> getCities(string gid)
+        /*public List<string> getCities(string Gid)
         {
             var list = new List<string>();
             listCities.ForEach(c =>
             {
-                if (c.Gid == gid)
-                    list.Add(c.CityName_en);
+                if (c.Gid == Gid) 
+                    list.Add(c.CityName_en); 
+
             });
 
             return list;
+        }*/
+
+        public void OnPost()
+        {
+            SerchProduct();
+
+
         }
 
         public void OnGet()
 
         {
-            FetchCities();  
+            FetchCities();
+            FetchCategory();
             FetchGovernates();
+            
+
+
         }
-        void FetchCities()
+
+        void SerchProduct()
         {
-            listCities.Clear();
-            string constr = "Server=(localdb)\\mssqllocaldb;Database=Thriftly;Trusted_Connection=True;MultipleActiveResultSets=true";
-            using (SqlConnection con = new SqlConnection(constr))
-            {
-                string query = "SELECT * FROM City;";
-                using (SqlCommand cmd = new SqlCommand(query))
-                {
-                    cmd.Connection = con;
-                    con.Open();
-                    using (SqlDataReader sdr = cmd.ExecuteReader())
-                    {
-
-                        while (sdr.Read())
-                        {
-                            listCities.Add(new City( sdr["CityName_en"].ToString() , sdr ["CityId"].ToString(), sdr["Gid"].ToString()));
-                        }
-                    }
-                    con.Close();
-                }
-            }
-        }
-
-
-        void FetchGovernates() {
             listGovernates.Clear();
-            string constr = "Server=(localdb)\\mssqllocaldb;Database=Thriftly;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string query = "SELECT * FROM governorate;";
@@ -78,7 +68,80 @@ namespace WebApplication1.Pages
 
                         while (sdr.Read())
                         {
-                            listGovernates.Add(new Governorate(sdr["Gid"].ToString(),sdr["GName_en"].ToString()));                    
+                            listGovernates.Add(new Governorate(sdr["Gid"].ToString(), sdr["GName_en"].ToString()));
+                        }
+                    }
+                    con.Close();
+                }
+            }
+
+
+        }
+
+        void FetchGovernates()
+        {
+            listGovernates.Clear();
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "SELECT * FROM governorate;";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        while (sdr.Read())
+                        {
+                            listGovernates.Add(new Governorate(sdr["Gid"].ToString(), sdr["GName_en"].ToString()));
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+        void FetchCategory()
+        {
+            listGovernates.Clear();
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "SELECT * FROM Category;";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        while (sdr.Read())
+                        {
+                            listCategories.Add(new Category(sdr["CatId"].ToString(), sdr["CName"].ToString()));
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+        void FetchCities()
+        {
+            listCities.Clear();
+            //string constr = "Server=(localdb)\\mssqllocaldb;Database=Thriftly;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string constr = "Data Source = localhost\\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "SELECT * FROM City;";
+                using (SqlCommand cmd = new SqlCommand(query)) //new constr    Data Source = localhost\MSSQLSERVER01; Initial Catalog = model; Integrated Security = True
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        while (sdr.Read())
+                        {
+                            listCities.Add(new City(sdr["CityName_en"].ToString(), sdr["CityId"].ToString(), sdr["Gid"].ToString()));
                         }
                     }
                     con.Close();
@@ -88,7 +151,14 @@ namespace WebApplication1.Pages
 
 
     }
+
+       
+
+
+       
 }
+
+
 
 public class Governorate
 {
@@ -99,6 +169,17 @@ public class Governorate
     {
         this.gId = id;  
         this.gNameEn = name;    
+    }
+}
+public class Category
+{
+    public string CatId;
+    public string CName;
+
+    public Category(string CatId, string CName)
+    {
+        this.CatId = CatId;
+        this.CName = CName;
     }
 }
 public class City
@@ -114,5 +195,20 @@ public class City
         this.CityId = id;
         this.CityName_en = name;
         this.Gid = govId;   
+    }
+}
+public class Product
+{
+
+    public string CityName_en;
+
+    public string CityId;
+
+    public string Gid;
+    public Product(string name, string id, string govId)
+    {
+        this.CityId = id;
+        this.CityName_en = name;
+        this.Gid = govId;
     }
 }
